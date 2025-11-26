@@ -11,37 +11,28 @@ namespace LabWork
         private readonly GraphRenderer _renderer;
         private List<PointF> _dataPoints;
 
-        // UI елементи
         private CheckBox _chkScatterMode;
         private Panel _controlPanel;
 
         public MainForm()
         {
-            // Налаштування форми
             this.Text = "Лабораторна робота: Графік";
             this.Size = new Size(800, 600);
-
-            // 1. Увімкнення подвійної буферизації (вимога проти мерехтіння)
             this.DoubleBuffered = true;
 
-            // Ініціалізація компонентів
             InitializeCustomComponents();
 
-            // Ініціалізація логіки
             _calculator = new FunctionCalculator(2.5, 9, 0.8);
             _renderer = new GraphRenderer();
 
-            // Завантаження даних (Model)
             LoadData();
 
-            // Підписка на події
-            this.Resize += (s, e) => this.Invalidate(); // Перемальовуємо при зміні розміру
-            this.Paint += MainForm_Paint;
+            // Важливо: початковий розрахунок координат
+            UpdateGraphLayout();
         }
 
         private void InitializeCustomComponents()
         {
-            // Панель для кнопок знизу
             _controlPanel = new Panel
             {
                 Dock = DockStyle.Bottom,
@@ -49,7 +40,6 @@ namespace LabWork
                 BackColor = Color.WhiteSmoke
             };
 
-            // Чекбокс для перемикання режиму (Scatter vs Line)
             _chkScatterMode = new CheckBox
             {
                 Text = "Точковий режим (Scatter Plot)",
@@ -57,8 +47,7 @@ namespace LabWork
                 Location = new Point(20, 15)
             };
 
-            // При зміні чекбокса просто викликаємо перемалювання
-            _chkScatterMode.CheckedChanged += (s, e) => this.Invalidate();
+            _chkScatterMode.CheckedChanged += (s, e) => this.Invalidate(); // Тут тільки перемальовуємо, перераховувати координати не треба
 
             _controlPanel.Controls.Add(_chkScatterMode);
             this.Controls.Add(_controlPanel);
@@ -69,17 +58,37 @@ namespace LabWork
             _dataPoints = _calculator.GetPoints();
         }
 
-        private void MainForm_Paint(object sender, PaintEventArgs e)
+        // Цей метод відповідає за важкі математичні перетворення
+        private void UpdateGraphLayout()
         {
-            // Обчислюємо область для малювання (все вікно мінус панель керування)
+            if (_dataPoints == null) return;
+
+            // Обчислюємо доступну область
             RectangleF plotArea = new RectangleF(0, 0, this.ClientSize.Width, this.ClientSize.Height - _controlPanel.Height);
 
-            // Делегуємо малювання рендереру
-            // Передаємо стан чекбокса (Checked) для вибору типу графіка
-            _renderer.Draw(e.Graphics, plotArea, _dataPoints, _chkScatterMode.Checked);
+            // Кешуємо координати точок
+            _renderer.Recalculate(plotArea, _dataPoints);
         }
 
-        // Очищення ресурсів при закритті
+        // Обробник зміни розміру
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            // 1. Спочатку перераховуємо точки (математика)
+            UpdateGraphLayout();
+
+            // 2. Потім викликаємо перемалювання (графіка)
+            this.Invalidate();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            // Тут просто малюємо вже готові дані. Ніяких обчислень.
+            _renderer.Draw(e.Graphics, _chkScatterMode.Checked);
+        }
+
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             _renderer.Dispose();

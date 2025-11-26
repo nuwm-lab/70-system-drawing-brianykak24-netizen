@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabWork", "..\LabWork\LabWork.csproj", "{927D3B1B-17B4-4344-BE33-674A4EDDB777}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabWork", "LabWork\LabWork.csproj", "{99E5C223-0F79-47B7-BFF5-0C95AF725035}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{927D3B1B-17B4-4344-BE33-674A4EDDB777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{927D3B1B-17B4-4344-BE33-674A4EDDB777}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{927D3B1B-17B4-4344-BE33-674A4EDDB777}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{927D3B1B-17B4-4344-BE33-674A4EDDB777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99E5C223-0F79-47B7-BFF5-0C95AF725035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99E5C223-0F79-47B7-BFF5-0C95AF725035}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99E5C223-0F79-47B7-BFF5-0C95AF725035}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99E5C223-0F79-47B7-BFF5-0C95AF725035}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -58,7 +58,6 @@ namespace LabWork
             _dataPoints = _calculator.GetPoints();
         }
 
-        // Цей метод відповідає за важкі математичні перетворення
         private void UpdateGraphLayout()
         {
             if (_dataPoints == null) return;

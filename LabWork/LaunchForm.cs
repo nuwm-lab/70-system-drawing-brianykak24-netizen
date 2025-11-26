@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace LabWork
 {
-    static class Program
+    static class LaunchForm
     {
         [STAThread]
         static void Main()
